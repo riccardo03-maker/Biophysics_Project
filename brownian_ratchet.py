@@ -96,11 +96,11 @@ def evolution(N, D): #evolves the system for N time steps
     #time[i]=t
     if(state==0 and np.random.uniform()<=k_off*delta_t):
       state=1
-      #D=200
+      D=200
       continue
     if(state==1 and np.random.uniform()<=k_on*delta_t):
       state=0
-      #D=20000
+      D=20000
       continue
   velocity=x/t
   return velocity
