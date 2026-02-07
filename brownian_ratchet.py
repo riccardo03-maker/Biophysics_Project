@@ -83,7 +83,9 @@ for i in range(100):
   speed[i]=evolution(10000000, D)
 
 plt.hist(speed, bins=100) #histogram of speed vector
+plt.title("Histogram of velocities with two-state system")
 plt.xlabel("Velocity (nm/s)")
+plt.ylabel("Count")
 plt.show()
 
 print(np.mean(speed))
