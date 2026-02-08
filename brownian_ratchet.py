@@ -11,7 +11,7 @@ D=40000 #nanometer^2/second
 
 @njit         #Python compiler, useful to have a faster code
 def force(x): #the first derivative of the potential
-  xm=x%8
+  xm=x%8      #period of 8 nm
   if(xm>=0 and xm<3):
     return -1.3
   elif(xm>=3 and xm<4):
@@ -23,7 +23,7 @@ def force(x): #the first derivative of the potential
   
 @njit
 def potential(x): #the potential
-  xm=x%8
+  xm=x%8          #period of 8 nm
   if(xm>=0 and xm<3):
     return -1.3*x
   if(xm>=3 and xm<4):
@@ -35,17 +35,17 @@ def potential(x): #the potential
   
 
 @njit  
-def mala_step_on(x, brownian):
-    y=x-(force(x)*delta_t*D)+(math.sqrt(2*D)*brownian)
+def mala_step_on(x, brownian):                          #integration step with check Metropolis-Hastings
+    y=x-(force(x)*delta_t*D)+(math.sqrt(2*D)*brownian)  #candidate y
+    
     log_pi_ratio=potential(x)-potential(y)
-
     mean_x=x-(force(x)*delta_t*D)
     mean_y=y-(force(y)*delta_t*D)
     denominator=1/(4*D*delta_t)
-
     log_q_ratio=denominator*((y-mean_x)*(y-mean_x)-(x-mean_y)*(x-mean_y))
-
     log_alpha=log_pi_ratio + log_q_ratio
+    #for simplicity we calculate the logarithm of alpha
+
     if(math.log(np.random.uniform())<log_alpha):
       return y, False
     else:
@@ -56,8 +56,10 @@ def evolution(N, D): #evolves the system for N time steps
   t=0
   x=3.0 #start from a minimum of the potential
   state=0 # 0 means potential on, 1 means potential off
+
   for i in range(N):
     brownian=np.random.normal(0, math.sqrt(delta_t))
+
     if(state==0):
       x, not_accepted=mala_step_on(x, brownian)
     if(not_accepted): #don't update position and time if the transition is not accepted
@@ -65,7 +67,8 @@ def evolution(N, D): #evolves the system for N time steps
     if(state==1):
       x=x+(math.sqrt(2*D)*brownian)
     t=t+delta_t
-    if(state==0 and np.random.uniform()<=k_off*delta_t):
+
+    if(state==0 and np.random.uniform()<=k_off*delta_t):  #changes of state
       state=1
       D=400
       continue
@@ -73,20 +76,21 @@ def evolution(N, D): #evolves the system for N time steps
       state=0
       D=40000
       continue
+
   velocity=x/t
   return velocity
 
 
-np.random.seed(54)
-speed=np.zeros(100) # use 100 velocities to draw an histogram
+np.random.seed(54)   #set seed for reproducibility
+velocities=np.zeros(100) # use 100 velocities to draw an histogram
 for i in range(100):
-  speed[i]=evolution(10000000, D)
+  velocities[i]=evolution(10000000, D) #evolve for 10^7 time steps
 
-plt.hist(speed, bins=100) #histogram of speed vector
+plt.hist(velocities, bins=100) #histogram of velocities
 plt.title("Histogram of velocities with two-state system")
 plt.xlabel("Velocity (nm/s)")
 plt.ylabel("Count")
 plt.show()
 
-print(np.mean(speed))
-print(np.std(speed))
+print(np.mean(velocities)) #print mean and standard deviation
+print(np.std(velocities))
