@@ -88,8 +88,8 @@ def gaussian(x, amp, mu, sigma):      #Gaussian function for fit
 # main
 
 np.random.seed(54)   #set seed for reproducibility
-velocities=np.zeros(100) # use 100 velocities to draw an histogram
-for i in range(100):
+velocities=np.zeros(10000) # use 100 velocities to draw an histogram
+for i in range(10000):
   velocities[i]=evolution(10000000, D) #evolve for 10^7 time steps
 
 n, bins, _ =plt.hist(velocities, bins=80, density=True) #histogram of velocities
