@@ -82,11 +82,11 @@ def evolution(N, D): #evolves the system for N time steps
 
 
 np.random.seed(54)   #set seed for reproducibility
-velocities=np.zeros(100) # use 100 velocities to draw an histogram
-for i in range(100):
+velocities=np.zeros(10000) # use 100 velocities to draw an histogram
+for i in range(10000):
   velocities[i]=evolution(10000000, D) #evolve for 10^7 time steps
 
-plt.hist(velocities, bins=100) #histogram of velocities
+plt.hist(velocities, bins=10000) #histogram of velocities
 plt.title("Histogram of velocities with two-state system")
 plt.xlabel("Velocity (nm/s)")
 plt.ylabel("Count")
