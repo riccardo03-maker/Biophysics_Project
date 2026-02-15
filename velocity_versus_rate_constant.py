@@ -29,3 +29,14 @@ plt.xlabel("k_off (1/s)")
 plt.ylabel("k_on (1/s)")
 plt.title("Velocity in function of the rate constants")
 plt.show()
+
+plt.imshow(errors_matrix, origin="lower", extent=[k_possible[0], k_possible[9], k_possible[0], k_possible[9]], aspect="auto")
+#creates a heatmap of standard deviations of velocity versus D_on and D_off
+
+plt.xscale("log")
+plt.yscale("log")
+plt.colorbar(label="Standard deviation (nm/s)")
+plt.xlabel("k_off (1/s)")
+plt.ylabel("k_on (1/s)")
+plt.title("Standard deviations of velocity")
+plt.show()
