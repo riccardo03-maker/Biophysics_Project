@@ -13,8 +13,8 @@ errors_matrix=np.zeros((10,10)) #matrix with the standard deviations of the velo
 
 for i, k_on in enumerate(k_possible):
     for j, k_off in enumerate(k_possible):
-        velocities=np.zeros(2)
-        for k in range(2):
+        velocities=np.zeros(100)
+        for k in range(100):
             velocities[k]=evolution_velocity(N, D_on, D_off, k_on, k_off, delta_t) #evolve for 10^7 time steps
         velocity_matrix[i, j]=np.mean(velocities)
         errors_matrix[i, j]=np.std(velocities)
