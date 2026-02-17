@@ -12,8 +12,8 @@ D_off=400 #nanometer^2/second
 
 position, time=evolution_position_time(N, D_on, D_off, k_on, k_off, delta_t) #evolve for 10^7 time steps
 
-plt.plot(time, position)
-plt.title("Trajectory of the kinesin")
+plt.plot(time, position, color="green")
+plt.title("Time evolution of the kinesin")
 plt.xlabel("Time (s)")
 plt.ylabel("Position (nm)")
 plt.show()

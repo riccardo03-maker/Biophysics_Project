@@ -11,8 +11,8 @@ D_on=40000 #nanometer^2/second
 D_off=400 #nanometer^2/second
 
 
-velocities=np.zeros(100)
-for i in range(100):
+velocities=np.zeros(10000)
+for i in range(10000):
   velocities[i]=evolution_velocity(N, D_on, D_off, k_on, k_off, delta_t) #evolve for 10^7 time steps
 
 n, bins, _ =plt.hist(velocities, bins=80, density=True) #histogram of velocities
